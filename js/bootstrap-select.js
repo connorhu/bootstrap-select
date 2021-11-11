@@ -134,66 +134,7 @@
       if (attrVal) attributesObject[item] = attrVal;
     });
 
-    // for backwards compatibility
-    // (using title as placeholder is deprecated - remove in v2.0.0)
-    if (!attributesObject.placeholder && attributesObject.title) {
-      attributesObject.placeholder = attributesObject.title;
-    }
-
     return attributesObject;
-  }
-
-  // Polyfill for browsers with no classList support
-  // Remove in v2
-  if (!('classList' in document.createElement('_'))) {
-    (function (view) {
-      if (!('Element' in view)) return;
-
-      var classListProp = 'classList',
-          protoProp = 'prototype',
-          elemCtrProto = view.Element[protoProp],
-          objCtr = Object,
-          classListGetter = function () {
-            var $elem = $(this);
-
-            return {
-              add: function (classes) {
-                classes = Array.prototype.slice.call(arguments).join(' ');
-                return $elem.addClass(classes);
-              },
-              remove: function (classes) {
-                classes = Array.prototype.slice.call(arguments).join(' ');
-                return $elem.removeClass(classes);
-              },
-              toggle: function (classes, force) {
-                return $elem.toggleClass(classes, force);
-              },
-              contains: function (classes) {
-                return $elem.hasClass(classes);
-              }
-            }
-          };
-
-      if (objCtr.defineProperty) {
-        var classListPropDesc = {
-          get: classListGetter,
-          enumerable: true,
-          configurable: true
-        };
-        try {
-          objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
-        } catch (ex) { // IE 8 doesn't support enumerable:true
-          // adding undefined to fight this issue https://github.com/eligrey/classList.js/issues/36
-          // modernie IE8-MSW7 machine has IE8 8.0.6001.18702 and is affected
-          if (ex.number === undefined || ex.number === -0x7FF5EC54) {
-            classListPropDesc.enumerable = false;
-            objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
-          }
-        }
-      } else if (objCtr[protoProp].__defineGetter__) {
-        elemCtrProto.__defineGetter__(classListProp, classListGetter);
-      }
-    }(window));
   }
 
   var testElement = document.createElement('_');
@@ -3476,10 +3417,6 @@
       if ($this.is('select')) {
         var data = $this.data('selectpicker'),
             options = typeof _option == 'object' && _option;
-
-        // for backwards compatibility
-        // (using title as placeholder is deprecated - remove in v2.0.0)
-        if (options.title) options.placeholder = options.title;
 
         if (!data) {
           var dataAttributes = $this.data();
