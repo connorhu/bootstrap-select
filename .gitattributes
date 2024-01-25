@@ -1,0 +1,10 @@
+# Enforce Unix newlines
+* text=auto eol=lf
+
+# Don't diff or textually merge source maps
+*.map binary
+
+.github      export-ignore
+docs         export-ignore
+tests        export-ignore
+.babelrc.js  export-ignore
