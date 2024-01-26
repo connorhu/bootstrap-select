@@ -84,20 +84,20 @@ Add the `selectpicker` class to your select elements to auto-initialize bootstra
 ### Via JavaScript
 ```js
 // To style only selects with the my-select class
-$('.my-select').selectpicker();
+$('.my-select').selectpicker()
 ```
 or
 ```js
 // To style all selects
-$('select').selectpicker();
+$('select').selectpicker()
 ```
 
 If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`.ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
 
 ```js
-$(function () {
-	$('select').selectpicker();
-});
+$(() => {
+  $('select').selectpicker()
+})
 ```
 
 
